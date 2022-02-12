@@ -109,7 +109,7 @@ const LoginForm = (props: Props) => {
             disabled={loading}
           >
             {loading && <div className="spinner-border spinner-border-sm text-light mr-2" role="status" />}
-            <FormattedMessage id="logIn" />
+            <FormattedMessage id="login" />
           </button>
         </div>
         <div className="col-md-auto" style={{ margin: '16px 0 0 0', display: 'flex', justifyContent: 'center' }}>
@@ -124,7 +124,7 @@ const LoginForm = (props: Props) => {
             <FormattedMessage id="signUp" />
           </button> */}
           <Link
-            to="/signup"
+            to='/sign-up'
             id='signUp-btn'
             className="btn" 
             style={{ minWidth: '160px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
@@ -132,7 +132,7 @@ const LoginForm = (props: Props) => {
             {
               loading && <div className="spinner-border spinner-border-sm text-align mr-2" role="status"/>
             }
-            <FormattedMessage id="signUp"/>
+            <FormattedMessage id="register"/>
           </Link>
         </div>
       </div>

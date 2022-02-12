@@ -43,10 +43,6 @@ const LoginPage = () => {
   }, 
   [dispatch],
   );
-
-  const onSignin = () => {
-    dispatch(replace(ROUTES.signup));
-  }
   return (
     <div
       className="container"
