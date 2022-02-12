@@ -1,10 +1,11 @@
 import React from "react";
 import { FormattedMessage } from 'react-intl';
 import { ISignUpParams, ISignUpValidation, IGenderParams, ILocationParams } from '../../../models/auth';
-
+import { validateSignUp, validSignUp } from '../utils';
 import { Link } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
+import { GENDER } from '../../../utils/constants'
 
 interface Props {
     onSignUp(values: ISignUpParams): void;
@@ -28,17 +29,68 @@ const SignUpForm = (props: Props) => {
     const [validate, setValidate] = React.useState<ISignUpParams>();
 
     const onSubmit = React.useCallback(() => {
-        // const validate = validateSignUp(formValues);
+        const validate = validateSignUp(formValues)
+        console.log(formValues)
+        setValidate(validate)
+        if (!validateSignUp(validate)) {
+            return;
+        }
+        onSignUp(formValues);
     }, [formValues, onSignUp]);
 
     const renderGender = () => {
-        return 1;
+        const arrGender: JSX.Element[] = [
+            <option disabled selected value={''} key={''}>
+                {' '}
+                -- select an option --
+                {' '}
+            </option>
+        ];
+        GENDER.map((g: IGenderParams, index: number) => {
+            arrGender.push(
+                <option value={g.value} key={index}>
+                    {g.label}
+                </option>
+            );
+        })
+
+        return arrGender;
     };
     const renderRegion = () => {
-        return 1;
+        const arrRegion: JSX.Element[] = [
+            <option disabled selected value={''} key={''}>
+                {' '}
+                -- select an option --
+                {' '}
+            </option>
+        ];
+        locations.map((location: ILocationParams, index: number) => {
+            arrRegion.push(
+                <option value={location.id} key={index}>
+                    {location.name}
+                </option>
+            );
+        })
+
+        return arrRegion;
     };
     const renderState = () => {
-        return 1;
+        const arrState: JSX.Element[] = [
+            <option disabled selected value={''} key={''}>
+                {' '}
+                -- select an option --
+                {' '}
+            </option>
+        ];
+        locations.map((location: ILocationParams, index: number) => {
+            arrState.push(
+                <option value={location.id} key={index}>
+                    {location.name}
+                </option>
+            );
+        })
+
+        return arrState;
     };
     return(
         <form
@@ -51,7 +103,13 @@ const SignUpForm = (props: Props) => {
         }}
         className="row g-3 needs-validation"
         >
-        {!!errorMessage}
+        {
+            !!errorMessage && (
+                <div className="alert alert-danger" role="alert" style={{width: '100%'}}>
+                    {errorMessage}
+                </div>
+            )
+        }
 
             <div className="col-md-12">
                 <label htmlFor="inputEmail" className="form-label">
@@ -61,51 +119,51 @@ const SignUpForm = (props: Props) => {
                     type="text" 
                     className="form-control" 
                     id="imputEmail" 
-                    // value={formValues.email}
-                    // onChange={(e) => setFormValues({...formValues, email: e.target.value})}
+                    value={formValues.email}
+                    onChange={(e) => setFormValues({...formValues, email: e.target.value})}
                 />
 
-                {/* {!!validate?.email && (
+                {!!validate?.email && (
                     <small className="text-danger">
                         <FormattedMessage id={validate?.email} />
                     </small>
-                )} */}
+                )}
             </div>
             <div className="col-md-12">
                 <label htmlFor="inputPassword" className="form-label">
                     <FormattedMessage id="password" />
                 </label>
                 <input 
-                    type="text" 
+                    type="password" 
                     className="form-control" 
                     id="imputPassword" 
-                    // value={formValues.password}
-                    // onChange={(e) => setFormValues({...formValues, password: e.target.value})}
+                    value={formValues.password}
+                    onChange={(e) => setFormValues({...formValues, password: e.target.value})}
                 />
     
-                {/* {!!validate?.password && (
+                {!!validate?.password && (
                     <small className="text-danger">
                         <FormattedMessage id={validate?.password} />
                     </small>
-                )} */}
+                )}
             </div>
             <div className="col-md-12">
                 <label htmlFor="inputRepeatPassword" className="form-label">
                     <FormattedMessage id="repeatPassword" />
                 </label>
                 <input 
-                    type="text" 
+                    type="password" 
                     className="form-control" 
                     id="inputRepeatPassword" 
-                    // value={formValues.repeatPassword}
-                    // onChange={(e) => setFormValues({...formValues, repeatPassword: e.target.value})}
+                    value={formValues.repeatPassword}
+                    onChange={(e) => setFormValues({...formValues, repeatPassword: e.target.value})}
                 />
 
-                {/* {!!validate?.repeatPassword && (
+                {!!validate?.repeatPassword && (
                     <small className="text-danger">
                         <FormattedMessage id={validate?.repeatPassword} />
                     </small>
-                )} */}
+                )}
             </div>
             <div className="col-md-12">
                 <label htmlFor="inputName" className="form-label">
@@ -115,15 +173,15 @@ const SignUpForm = (props: Props) => {
                     type="text" 
                     className="form-control" 
                     id="inputName" 
-                    // value={formValues.name}
-                    // onChange={(e) => setFormValues({...formValues, name: e.target.value})}
+                    value={formValues.name}
+                    onChange={(e) => setFormValues({...formValues, name: e.target.value})}
                 />
 
-                {/* {!!validate?.name && (
+                {!!validate?.name && (
                     <small className="text-danger">
                         <FormattedMessage id={validate?.name} />
                     </small>
-                )} */}
+                )}
             </div>
             <div className="col-md-12">
                 <label htmlFor="inputGender" className="form-label">
@@ -132,16 +190,16 @@ const SignUpForm = (props: Props) => {
                 <select
                     className="form-control" 
                     id="selectGender" 
-                    // value={formValues.gender}
-                    // onChange={(e) => setFormValues({...formValues, gender: e.target.value})}
+                    value={formValues.gender}
+                    onChange={(e) => setFormValues({...formValues, gender: e.target.value})}
                 >
                     {renderGender()}
                 </select>
-                {/* {!!validate?.gender && (
+                {!!validate?.gender && (
                     <small className="text-danger">
                         <FormattedMessage id={validate?.gender} />
                     </small>
-                )} */}
+                )}
             </div>
             <div className="col-md-12">
                 <label htmlFor="selectRegion" className="form-label">
@@ -150,17 +208,17 @@ const SignUpForm = (props: Props) => {
                 <select
                     className="form-control" 
                     id="selectRegion" 
-                    // value={formValues.region}
-                    // onChange={(e) => setFormValues({...formValues, region: e.target.value})}
+                    value={formValues.region}
+                    onChange={(e) => setFormValues({...formValues, region: e.target.value})}
                 >
                     {renderRegion()}
                 </select>
 
-                {/* {!!validate?.region && (
+                {!!validate?.region && (
                     <small className="text-danger">
                         <FormattedMessage id={validate?.region} />
                     </small>
-                )} */}
+                )}
             </div>
             {formValues?.region ? (
                 <div className="col-md-12">
@@ -170,17 +228,17 @@ const SignUpForm = (props: Props) => {
                 <select
                     className="form-control" 
                     id="selectState" 
-                    // value={formValues.state}
-                    // onChange={(e) => setFormValues({...formValues, state: e.target.value})}
+                    value={formValues.state}
+                    onChange={(e) => setFormValues({...formValues, state: e.target.value})}
                 >
                     {renderState()}
                 </select>
 
-                {/* {!!validate?.region && (
+                {!!validate?.region && (
                     <small className="text-danger">
                         <FormattedMessage id={validate?.region} />
                     </small>
-                )} */}
+                )}
             </div>
             ):null}
             <div className="row justify-content-md-center">
