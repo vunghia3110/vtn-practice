@@ -29,7 +29,7 @@ export default function configureStore(preloadedState: any) {
   );
 
   const store = createStore(
-    persistedReducer, // root reducer with router state
+    persistedReducer, // root reducer with router state, lưu reduce vao trong local storage
     preloadedState,
     composeEnhancers(
       applyMiddleware(

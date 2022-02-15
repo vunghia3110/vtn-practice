@@ -33,10 +33,6 @@ const SignUpPage = () => {
         }
     },[])
 
-    useEffect(() => {
-        getLocation();
-    },[getLocation]);
-
     const onSignUp = React.useCallback(
         async (values: ISignUpParams) => {
             setErrorMessage('');
@@ -57,6 +53,10 @@ const SignUpPage = () => {
 
             setErrorMessage(getErrorMessageResponse(json));
     },[dispatch]);
+
+    useEffect(() => {
+        getLocation();
+    },[getLocation]);
     return (
         <div
             className="container"

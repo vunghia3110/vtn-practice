@@ -26,7 +26,7 @@ const SignUpForm = (props: Props) => {
         region: '',
         state: ''
     });
-    const [validate, setValidate] = React.useState<ISignUpParams>();
+    const [validate, setValidate] = React.useState<ISignUpValidation>();
 
     const onSubmit = React.useCallback(() => {
         const validate = validateSignUp(formValues)
@@ -234,9 +234,9 @@ const SignUpForm = (props: Props) => {
                     {renderState()}
                 </select>
 
-                {!!validate?.region && (
+                {!!validate?.state && (
                     <small className="text-danger">
-                        <FormattedMessage id={validate?.region} />
+                        <FormattedMessage id={validate?.state} />
                     </small>
                 )}
             </div>

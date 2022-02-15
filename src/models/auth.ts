@@ -40,3 +40,8 @@ export interface ILocationParams {
   pid: number | null;
 }
 
+export interface GetTheList {
+  id: number;
+  thumbnailUrl: string; 
+  title: string
+}
