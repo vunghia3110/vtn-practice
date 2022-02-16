@@ -10,35 +10,41 @@ const EditorForm = () => {
   const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>();
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<any[]>([]);
 
-  const getList = React.useCallback(async () => {
-    const API_PATHS = 'https://jsonplaceholder.typicode.com/photos';
-    const json = await dispatch(fetchThunk(API_PATHS, 'get'));
-    console.log(json[0].title);
-    if(json?.code === 200) {
-        setList(json)
-        return json;
-    }
-},[])
-  const renderList = () => {
-    const arrList: JSX.Element[] = [
-      <div className="post-item" key={''}>
-        <img src="https://via.placeholder.com/150/92c952" className="post-item-avt" />
-        <div className="post-item-title">accusamus beatae ad facilis cum similique qui sunt</div>
-      </div>
-    ];
+  const fetchList = () => {
+    // Where we're fetching data from
+    return fetch("https://jsonplaceholder.typicode.com/photos?_start=1&_end=20")
+    // We get the API response and receive data in JSON format
+      .then((response) => response.json())
+      .then((data) => setList(data))
+      .catch ((error) => console.error(error));
+}
 
-    return arrList;
-};
-  // console.log(getPost())
+  // console.log(list[1]?.title)
+
+  useEffect(() => {
+    fetchList()
+  }, []);
+//   const renderList = () => {
+//     const arrList: JSX.Element[] = [
+//       <div className="post-item" key={''}>
+//         <img src="https://via.placeholder.com/150/92c952" className="post-item-avt" />
+//         <div className="post-item-title">accusamus beatae ad facilis cum similique qui sunt</div>
+//       </div>
+//     ];
+
+//     return arrList;
+// };
   const css = `
-    #editor-form {}
+    #editor-form {
+        margin-top: 10px;
+    }
     #buttons-container {}
     #content-container {}
     .post-item {
       display: flex;
-      justify-content: center;
+      // justify-content: center;
       align-items: center;
       border: 1px solid gray;
       border-radius: 10px;
@@ -70,8 +76,13 @@ const EditorForm = () => {
         <button className="btn" key={2}>Reset</button>
       </div>
       <div id="content-container">
-        {renderList()}
-        <div className="post-item">
+        {list.map((item, index) => (
+          <div className="post-item" key={index}>
+            <img src={item.url} className="post-item-avt" />
+            <div className="post-item-title">{item.title}</div>
+          </div>
+        ))}
+        {/* <div className="post-item">
           <img src="https://via.placeholder.com/150/92c952" className="post-item-avt" />
           <div className="post-item-title">accusamus beatae ad facilis cum similique qui sunt</div>
         </div>
@@ -86,7 +97,7 @@ const EditorForm = () => {
         <div className="post-item" style={{ backgroundColor: "#e5e5e5" }}>
           <img src="https://via.placeholder.com/150/92c952" className="post-item-avt" />
           <div className="post-item-title">accusamus beatae ad facilis cum similique qui sunt</div>
-        </div>
+        </div> */}
       </div>
     </form>
   );

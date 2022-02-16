@@ -26,6 +26,7 @@ const SignUpPage = () => {
         const json = await dispatch(fetchThunk(API_PATHS.getLocation, 'get'));
 
         setLoading(false);
+        console.log(json)
 
         if(json?.code === RESPONSE_STATUS_SUCCESS) {
             setLocations(json.data);
