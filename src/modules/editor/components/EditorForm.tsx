@@ -11,14 +11,22 @@ const EditorForm = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [list, setList] = useState<any[]>([]);
+  const [isInput, setIsInput] = useState(false);
+  const [listInput, setListInput] = useState<any[]>([]);
 
   const fetchList = () => {
     // Where we're fetching data from
     return fetch("https://jsonplaceholder.typicode.com/photos?_start=1&_end=20")
     // We get the API response and receive data in JSON format
       .then((response) => response.json())
-      .then((data) => setList(data))
-      .catch ((error) => console.error(error));
+      .then((data) => {
+        setLoading(false)
+        setList(data)
+      })
+      .catch ((error) => {
+        console.error(error)
+        setLoading(true)
+      });
 }
 
   // console.log(list[1]?.title)
@@ -40,7 +48,6 @@ const EditorForm = () => {
     #editor-form {
         margin-top: 10px;
     }
-    #buttons-container {}
     #content-container {}
     .post-item {
       display: flex;
@@ -52,8 +59,10 @@ const EditorForm = () => {
       margin-bottom: 5px;
     }
     #buttons-container {
+      max-width: 100vw;
       display: flex;
       justify-content: flex-end;
+      flex-wrap: wrap;
     }
     #buttons-container .btn {
       min-width: 100px;
@@ -66,8 +75,19 @@ const EditorForm = () => {
     }
     .post-item-title {
       margin-left: 20px;
+      padding: 5px;
+    }
+    .post-item-title:hover {
+      outline: solid 5px #D3D3D3;
+      border-radius: 5px;
     }
 `
+    const toInput = () => {
+      setIsInput(true); 
+      setListInput([...listInput, isInput])
+      console.log(listInput)
+    }
+    console.log(listInput)
   return (
     <form id="editor-form">
       <style>{css}</style>
@@ -75,13 +95,24 @@ const EditorForm = () => {
         <button className="btn" key={1}>Confirm</button>
         <button className="btn" key={2}>Reset</button>
       </div>
+      {loading && <div className="spinner-border spinner-border-sm text-light mr-2" role="status" />}
       <div id="content-container">
         {list.map((item, index) => (
-          <div className="post-item" key={index}>
+        <div className="post-item" key={index}>
             <img src={item.url} className="post-item-avt" />
-            <div className="post-item-title">{item.title}</div>
+            {!isInput? 
+              (
+                <div className="post-item-title" onClick={toInput}>
+                  {item.title}
+                </div>
+              )
+              :(
+                <input type="text" value={item.title} />
+              )
+            }
           </div>
-        ))}
+          )
+        )}
         {/* <div className="post-item">
           <img src="https://via.placeholder.com/150/92c952" className="post-item-avt" />
           <div className="post-item-title">accusamus beatae ad facilis cum similique qui sunt</div>
