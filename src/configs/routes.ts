@@ -6,4 +6,5 @@ export const ROUTES = {
   editor: '/editor',
   list: '/list',
   editorlist: '/editorlist',
+  table: '/table',
 };

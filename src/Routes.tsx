@@ -4,6 +4,7 @@ import { ROUTES } from './configs/routes';
 import ProtectedRoute from './modules/common/components/ProtectedRoute';
 import EditorPage from './modules/editor/pages/EditorPage';
 import ListPage from './modules/list/pages/ListPage';
+import TablePage from './modules/table/pages/TablePage';
 
 const HomePage = lazy(() => import('./modules/home/pages/HomePage'));
 const ContactPage = lazy(() => import('./modules/home/pages/ContactPage'));
@@ -23,6 +24,7 @@ export const Routes = (props: Props) => {
         <Route path={ROUTES.editor} component={EditorPage} />
         <Route path={ROUTES.list} component={ListPage} />
         <Route path={ROUTES.editorlist} component={ListPage} />
+        <Route path={ROUTES.table} component={TablePage} />
         <ProtectedRoute path={ROUTES.home} component={HomePage} />
         <Route path={ROUTES.contact} component={ContactPage} />
 
