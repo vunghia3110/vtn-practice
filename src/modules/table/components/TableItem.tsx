@@ -29,7 +29,7 @@ const TableItem = () => {
       <td>{'USD'}</td>
       <td>2.300.00</td>
       <td>#123456789456123</td>
-      <td className="d-flex justify-content-center">
+      <td className="d-flex justify-content-end">
         <DetailItem />
         <RemoveItem />
       </td>

@@ -3,7 +3,8 @@ import TableItem from './TableItem';
 import { ITableItem } from '../../../models/table';
 import { AiFillCaretDown } from 'react-icons/ai';
 import { BsChevronDown } from 'react-icons/bs';
-import TableHeader from './TableHeader'
+import TableHeader from './TableHeader';
+import TableFooter from './TableFooter';
 
 interface Props {
   data: ITableItem[];
@@ -60,19 +61,20 @@ const Table = (props: Props) => {
         </thead>
         <tbody>
           <TableItem />
-          <tr className="spacer" style={{height: '10px'}}></tr>
+          <tr className="spacer" style={{ height: '10px' }}></tr>
           <TableItem />
-          <tr className="spacer" style={{height: '10px'}}></tr>
+          <tr className="spacer" style={{ height: '10px' }}></tr>
           <TableItem />
-          <tr className="spacer" style={{height: '10px'}}></tr>
+          <tr className="spacer" style={{ height: '10px' }}></tr>
           <TableItem />
-          <tr className="spacer" style={{height: '10px'}}></tr>
+          <tr className="spacer" style={{ height: '10px' }}></tr>
           <TableItem />
-          <tr className="spacer" style={{height: '10px'}}></tr>
+          <tr className="spacer" style={{ height: '10px' }}></tr>
           <TableItem />
-          <tr className="spacer" style={{height: '10px'}}></tr>
+          <tr className="spacer" style={{ height: '10px' }}></tr>
         </tbody>
       </table>
+      <TableFooter />
     </div>
   );
 };
