@@ -4,3 +4,9 @@ export interface IAddTodo {
   priority: string;
   completed: boolean;
 }
+
+export interface IFilterTodo {
+  search: string;
+  status: string;
+  priority: string[]
+}

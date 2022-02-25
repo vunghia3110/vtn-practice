@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TableItem from './TableItem';
 import { ITableItem } from '../../../models/table';
 import { AiFillCaretDown } from 'react-icons/ai';
@@ -13,11 +13,15 @@ interface Props {
 
 const Table = (props: Props) => {
   const { data, sort } = props;
+  const [tableList, setTableList] = useState(() => {
+    return data.slice(0, 10);
+  })
   const css = `
     #table-container {
       padding: 40px;
       font-family: roboto;
       background-color: #F5F7FB;
+      width: 100%;
     }
     #table-title {
       text-align: center;
@@ -53,25 +57,18 @@ const Table = (props: Props) => {
                 <AiFillCaretDown />
               </p>
             </th>
-            <th scope="col">Currency</th>
+            <th scope="col">Funding Method</th>
+            <th scope="col">Payroll Currency</th>
             <th scope="col">Total</th>
-            <th scope="col">Invoice #</th>
+            <th scope="col">Order #</th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          <TableItem />
-          <tr className="spacer" style={{ height: '10px' }}></tr>
-          <TableItem />
-          <tr className="spacer" style={{ height: '10px' }}></tr>
-          <TableItem />
-          <tr className="spacer" style={{ height: '10px' }}></tr>
-          <TableItem />
-          <tr className="spacer" style={{ height: '10px' }}></tr>
-          <TableItem />
-          <tr className="spacer" style={{ height: '10px' }}></tr>
-          <TableItem />
-          <tr className="spacer" style={{ height: '10px' }}></tr>
+          {tableList.map((item, index) => {
+            return (<><TableItem key={index} data={item} />
+              <tr className="spacer" style={{ height: '10px' }}></tr></>)
+          })}
         </tbody>
       </table>
       <TableFooter />

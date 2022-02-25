@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from 'react-icons/ai';
+import { BsChevronBarLeft, BsChevronBarRight, BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 
 const FooterSlider = () => {
   const css = `
@@ -9,14 +10,12 @@ const FooterSlider = () => {
     }
   `;
   return (
-    <div style={{ width: '250px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div style={{ width: '200px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <style>{css}</style>
-      <AiOutlineDoubleLeft style={{ color: '#0d6efd', cursor: 'pointer' }} />
-      <span className="page-select fw-bold text-primary">1</span>
-      <span className="page-select fw-bold text-primary">2</span>
-      <span className="page-select fw-bold text-primary">3</span>
-      <span className="page-select fw-bold text-primary">4</span>
-      <AiOutlineDoubleRight style={{ color: '#0d6efd', cursor: 'pointer' }} />
+      <BsChevronBarLeft style={{ color: '#0d6efd', cursor: 'pointer', fontWeight: 800 }} />
+      <BsChevronLeft style={{ color: '#0d6efd', cursor: 'pointer', fontWeight: 800 }} />
+      <BsChevronRight style={{ color: '#0d6efd', cursor: 'pointer', fontWeight: 800 }} />
+      <BsChevronBarRight style={{ color: '#0d6efd', cursor: 'pointer', fontWeight: 800 }} />
     </div>
   );
 };

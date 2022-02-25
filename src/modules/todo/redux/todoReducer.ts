@@ -1,6 +1,10 @@
-import React from "react"
 import { ActionType, createCustomAction, getType } from 'typesafe-actions';
-import { IAddTodo } from "../../../models/todo";
+import { IAddTodo, IFilterTodo } from "../../../models/todo";
+
+export interface TodoState {
+  listTodo?: IAddTodo[];
+  filterTodo?: IFilterTodo;
+}
 
 const initState = {
   filters: {
@@ -21,7 +25,7 @@ export const addTodo = createCustomAction('todoList/addTodo', (data: IAddTodo) =
 const actions = { addTodo };
 type Action = ActionType<typeof actions>;
 
-const rootReducer = (state = initState, action: Action) => {
+const todoReducer = (state = initState, action: Action) => {
   console.log(state, action);
   switch(action.type) {
     case'todoList/addTodo' :
@@ -37,4 +41,4 @@ const rootReducer = (state = initState, action: Action) => {
   }
 }
 
-export default rootReducer;
+export default todoReducer;

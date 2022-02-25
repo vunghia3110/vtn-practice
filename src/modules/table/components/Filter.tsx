@@ -3,6 +3,7 @@ import { IFilterDropdown } from '../../../models/table';
 import { BsChevronDown } from 'react-icons/bs';
 import { AiFillCalendar } from 'react-icons/ai';
 import dayjs from 'dayjs';
+import { statusType } from '../constants'
 
 interface Props {
   type: string;
@@ -20,10 +21,9 @@ const Filter = (props: Props) => {
             <option value="" disabled selected style={{ color: 'gray' }}>
               {name}
             </option>
-            <option>Processing</option>
-            <option>Fulfilled</option>
-            <option>Pending</option>
-            <option>Receive</option>
+            {statusType.map((item, index) => {
+              return <option key={index} value={item}>{item}</option>
+            })}
           </select>
         </div>
       )}

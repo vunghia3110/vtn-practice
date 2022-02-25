@@ -1,14 +1,31 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import Table from "./Table";
 import { ITableItem } from '../../../models/table'
 import dayjs from 'dayjs';
 import DetailItem from "./DetailItem";
 import RemoveItem from "./RemoveItem";
 
-// interface Props {
-//   item: ITableItem;
-// }
-const TableItem = () => {
+interface Props {
+  data: ITableItem;
+}
+const TableItem = (props: Props) => {
+  const { data } = props;
+  const statusColor = () => {
+    switch(data.status) {
+      case 'Pending':
+        return '#99AEBC'
+      case 'Received':
+        return '#50BCE6'
+      case 'Fulfilled':
+        return '#76D1AB'
+      case 'Processed':
+        return '#FFBF55'
+      case 'Canceled':
+        return '#FD4F8B'
+      default: 
+        return 'white'
+    }
+  }
   const css = `
     #table-item {
       background-color: #fff;
@@ -23,12 +40,12 @@ const TableItem = () => {
   return (
     <tr id="table-item" className="table-row py-2">
       <style>{css}</style>
-      <td scope="row">Processing</td>
-      <td>{dayjs('2019-01-25').format('DD/MM/YYYY')}</td>
-      {/* <td>PGS</td> */}
-      <td>{'USD'}</td>
-      <td>2.300.00</td>
-      <td>#123456789456123</td>
+      <td scope="row" style={{fontWeight: 600, color: statusColor()}}>{data.status}</td>
+      <td>{dayjs(data.time_created).format('DD/MM/YYYY')}</td>
+      <td>{data.payment_type}</td>
+      <td>{data.currency}</td>
+      <td>{data.volume_input_in_input_currency + data.fees}</td>
+      <td className="text-primary">{data.payroll_id}</td>
       <td className="d-flex justify-content-end">
         <DetailItem />
         <RemoveItem />
