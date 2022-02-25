@@ -7,4 +7,5 @@ export const ROUTES = {
   list: '/list',
   editorlist: '/editorlist',
   table: '/table',
+  todo: '/todo',
 };
