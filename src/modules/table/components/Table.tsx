@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+// UI depends
 import TableItem from './TableItem';
 import { ITableItem } from '../../../models/table';
 import { AiFillCaretDown } from 'react-icons/ai';
 import { BsChevronDown } from 'react-icons/bs';
 import TableHeader from './TableHeader';
 import TableFooter from './TableFooter';
+// Redux dependencies
+import { useDispatch, useSelector } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppState } from '../../../redux/reducer';
+import { Action } from 'redux';
+import { setDisplayTable } from '../redux/tableReducer'
 
 interface Props {
   data: ITableItem[];
@@ -13,9 +20,16 @@ interface Props {
 
 const Table = (props: Props) => {
   const { data, sort } = props;
-  const [tableList, setTableList] = useState(() => {
-    return data.slice(0, 10);
-  })
+  const tableFullList = data;
+  const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>();
+  const tableTempList = useSelector((state: AppState) => state.table.tempItems);
+  const rows = useSelector((state: AppState) => state.table.rowsPerPage);
+  
+  useEffect(() => {
+    dispatch(setDisplayTable([...tableFullList]));
+  },[rows])
+  console.log('table temp list: ', tableTempList)
+  
   const css = `
     #table-container {
       padding: 40px;
@@ -65,7 +79,7 @@ const Table = (props: Props) => {
           </tr>
         </thead>
         <tbody>
-          {tableList.map((item, index) => {
+          {tableTempList?.map((item, index) => {
             return (<><TableItem key={index} data={item} />
               <tr className="spacer" style={{ height: '10px' }}></tr></>)
           })}

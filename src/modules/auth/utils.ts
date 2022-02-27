@@ -96,3 +96,11 @@ export const validSignUp = (values: ISignUpValidation) => {
     && !values.state;
 };
 
+export const validateEmptyField = (fieldValue: string | number) => {
+  if (!fieldValue) {
+    return 'valueRequire';
+  }
+
+  return '';
+};
+

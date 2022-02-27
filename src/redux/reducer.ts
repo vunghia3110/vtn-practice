@@ -6,6 +6,7 @@ import authReducer, { AuthState } from '../modules/auth/redux/authReducer';
 import intlReducer, { IntlState } from '../modules/intl/redux/intlReducer';
 import listReducer, { ListState } from '../modules/list/redux/listReducer';
 import todoReducer, { TodoState } from '../modules/todo/redux/todoReducer';
+import tableReducer, { TableState, TableFilter, TablePage } from './../modules/table/redux/tableReducer';
 
 export interface AppState {
   router: RouterState;
@@ -13,6 +14,9 @@ export interface AppState {
   profile: AuthState;
   list: ListState;
   todo: TodoState;
+  table: TableState;
+  tableFilter: TableFilter;
+  tablePage: TablePage;
 }
 
 export default function createRootReducer(history: History) {
@@ -22,5 +26,6 @@ export default function createRootReducer(history: History) {
     profile: authReducer,
     list: listReducer,
     todo: todoReducer,
+    table: tableReducer,
   });
 }
